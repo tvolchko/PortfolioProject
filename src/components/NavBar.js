@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import '../App.css'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { login, logout } from "../actions";
 
 
 const NavBar = ({loggedIn, dispatch}) => {
-    const { push } = useHistory()
+    // const { push } = useHistory()
     console.log(loggedIn)
     useEffect(() => {
         if(window.localStorage.getItem('login')) { 
@@ -16,7 +16,7 @@ const NavBar = ({loggedIn, dispatch}) => {
         } else {
             dispatch(logout())
         }
-      }, [loggedIn])
+      }, [loggedIn, dispatch])
 
     return (
         <div className="navBar">

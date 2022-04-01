@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { Route, Switch } from "react-router-dom";
 import NavBar from './components/NavBar'
@@ -6,12 +6,11 @@ import HomePage from './components/HomePage';
 import AccountHome from './components/AccountHome';
 import LoginForm from './components/LoginForm';
 import Logout from './components/Logout';
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import reducer from './reducers';
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import { login } from './actions';
 import WeatherPage from './components/WeatherPage';
 
 const store = createStore(reducer, applyMiddleware(thunk, logger))
@@ -39,10 +38,10 @@ function App({ dispatch }) {
   );
 }
 
-const mapState = state => {
-  return {
-    loggedIn: state.loggedIn
-  }
-}
+// const mapState = state => {
+//   return {
+//     loggedIn: state.loggedIn
+//   }
+// }
 
 export default App;

@@ -1,4 +1,4 @@
-
+import axios from "axios";
 export const FETCH_START = "FETCH_START";
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const FETCH_FAIL = "FETCH_FAIL";
@@ -12,13 +12,31 @@ export const actions = ''
 export const login = (form) => (dispatch) => {
     
     dispatch(fetchStart())
-    window.localStorage.setItem('login', form.userName)
-    dispatch(fetchSuccess(form.userName))
+    axios.post('https://tv-weather-app-login.herokuapp.com/api/login', form)
+        .then(resp => {
+            window.localStorage.setItem('login', resp.token)
+            dispatch(fetchSuccess(form.userName))
+        })
+        .catch(err => {
+            console.log('dadadadad', err.response.data.originalMessage)
+            dispatch(fetchFail(err.response.data.originalMessage))
+        })
 }
 
 export const logout = () => {
     window.localStorage.removeItem('login')
     return({type: LOG_OUT})
+}
+
+export const register = (form) => (dispatch) => {
+    dispatch(fetchStart())
+    axios.post('https://tv-weather-app-login.herokuapp.com/api/register', form)
+        .then(resp => {
+            dispatch(login(form))
+        })
+        .catch(err => {
+            dispatch(fetchFail(err))
+        })
 }
 
 export const fetchStart = () => {

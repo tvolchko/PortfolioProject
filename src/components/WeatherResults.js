@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
 
 const WeatherResults = (props) => {
-    const { location, current } = props.data
+    const { temp, conditions } = props.data.data
     useEffect(() => {
         console.log(props)
     }, [props])
-    if(!location) {
+    if(!temp) {
         return null
     }
     return (
         <>
-        <h2>City: {location.name}</h2>
-        <img src={current.weather_icons[0]} />
-        <h2>Temperature: {current.temperature * 9 / 5 + 32} degrees</h2>
+        <h2>City: {props.data.loc}</h2>
+        {/* <img src={current.weather_icons[0]} /> */}
+        <h2>Weather: {conditions}</h2>
+        <h2>Temperature: {temp} degrees</h2>
         </>
     )
 }

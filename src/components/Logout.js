@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { logout } from '../actions';
+import { logout } from '../actions';
 
-const Logout = () => {
+const Logout = ({dispatch}) => {
     const { push } = useHistory()
 
     useEffect(() => {
         window.localStorage.removeItem('login')
-        // dispatch(logout())
+        dispatch(logout())
         push('/front')
-
-    })
+        
+    }, [])
 
     return (
         <div></div>

@@ -3,7 +3,7 @@ import '../App.css'
 // import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { login, logout } from "../actions";
+import { fetchSuccess } from "../actions";
 
 
 const NavBar = ({loggedIn, dispatch}) => {
@@ -12,11 +12,9 @@ const NavBar = ({loggedIn, dispatch}) => {
     useEffect(() => {
         if(window.localStorage.getItem('login')) { 
             console.log(loggedIn)
-            dispatch(login('asd'))
-        } else {
-            dispatch(logout())
+            dispatch(fetchSuccess())
         }
-      }, [loggedIn, dispatch])
+      }, [])
 
     return (
         <div className="navBar">

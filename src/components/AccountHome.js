@@ -1,10 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
+import { fetchSuccess } from "../actions";
 
-const AccountHome = () => {
-
+const AccountHome = ({ dispatch }) => {
+    if(window.localStorage.getItem('login')){
+        dispatch(fetchSuccess())
+    }
     return (
         <>This is the Account Landing page!</>
     )
 }
 
-export default AccountHome
+const mapState = state => {
+    return {
+        loggedIn: state.loggedIn
+    }
+}
+
+export default connect(mapState)(AccountHome)

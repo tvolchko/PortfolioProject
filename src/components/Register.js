@@ -1,23 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { login } from "../actions";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
-import schema from "../yup_schema";
-import { fetchFail } from "../actions";
-
+import { register } from "../actions";
 
 
 const initialForm = {
     username: '',
     password: '',
-    email: ''
+    email: '',
 }
 
-
-const LoginForm = ({ fetching, error, dispatch}) => {
+const Register = ({loggedIn, dispatch}) => {
     const [form, setForm] = useState(initialForm)
-    // const [error, setError] = useState('')
     const { push } = useHistory()
 
     const handleChange = e => {
@@ -25,38 +20,23 @@ const LoginForm = ({ fetching, error, dispatch}) => {
             ...form,
             [e.target.name]:e.target.value
         });
-
     }
 
     const handleSubmit = e => {
         e.preventDefault()
-        schema.validate(form)
-        .then(() => {
-            console.log('validated')
-            dispatch(login(form))
-        })
-        .catch(err => {
-            // setError(err[0])
-            // dispatch(fetchFail(err))
-        })
-        
-        
+        dispatch(register(form))
     }
-    if(window.localStorage.getItem('login')){
-        push('/weather')
-    }
-    if(fetching){
-        return (
-            <>
-            Loading....
-            </>
-        )
-    }
+    useEffect(() => {
+        if(window.localStorage.getItem('login')){
+            push('/home')
+        }
+    }, [loggedIn])
+
 
     return (
         <>
-        <form>
-            <h3>{error.toUpperCase()}</h3>
+            <form>
+                <h2>Register:</h2>
             <div className="formItem">
                 <label htmlFor="username">User Name:</label>
                 <input 
@@ -75,7 +55,7 @@ const LoginForm = ({ fetching, error, dispatch}) => {
                     id='password'
                     name='password'
                     type={'password'}
-                    placeholder="Password"
+                    placeholder={'Password'}
                 />
             </div>
             <div className="formItem">
@@ -89,19 +69,16 @@ const LoginForm = ({ fetching, error, dispatch}) => {
                     placeholder="Email"
                 />
             </div>
-            <button onClick={handleSubmit}>Submit</button><br></br>
-            <Link to='/register'>Register here</Link>
+            <button onClick={handleSubmit}>Register Account</button>
         </form>
         </>
     )
 }
 
 const mapState = state => {
-    return {
-        loggedIn: state.loggedIn,
-        error: state.error,
-        fetching: state.fetching
+    return{
+        loggedIn: state.loggedIn
     }
 }
 
-export default connect(mapState)(LoginForm)
+export default connect(mapState)(Register)
